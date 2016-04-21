@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Products 2.0.1</id>
+	<version>1.0</version>
+	<vqmver>2.4.1</vqmver>
+	<author>Kareem</author>
+<file name="catalog/controller/module/cosyone_category.php">
+    <operation>
+            <search position="replace"><![CDATA[					
+            'name' => $category_3['name'] .($this->config->get('config_product_count') ?  ' (' . $total . ')' : ''),
+            ]]></search>
+            <add><![CDATA[
+                'name' => $category_3['name'],
+            ]]></add>
+    </operation>
+	<operation>
+            <search position="replace"><![CDATA[					
+            'name'    	=> $category_2['name']  .($this->config->get('config_product_count') ?  '<span>' . ' (' . $total . ')' . '</span>' : ''),]]></search>
+            <add><![CDATA[
+                'name'    	=> $category_2['name'],
+            ]]></add>
+    </operation>
+	<operation>
+            <search position="replace"><![CDATA[					
+            'name'     => $category_1['name'] .($this->config->get('config_product_count') ?  '<span>' . ' (' . $total . ')' . '</span>' : ''),	
+            ]]></search>
+            <add><![CDATA[
+                'name'     => $category_1['name'],	
+            ]]></add>
+    </operation>
+</file>
+<file name="catalog/controller/product/category.php">
+    <operation>
+            <search position="replace"><![CDATA[					
+            'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+            ]]></search>
+            <add><![CDATA[
+            'name'  => $result['name'] ,
+            ]]></add>
+    </operation>
+</file>
+
+
+</modification>

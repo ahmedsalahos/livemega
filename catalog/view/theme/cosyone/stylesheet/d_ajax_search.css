@@ -1,0 +1,72 @@
+#ajax_search_results {
+	margin:0px;
+	text-align:left;
+	position: absolute;
+	left:1px;
+	list-style-type: none;
+	z-index:1005;
+	width:90%;
+	font-size:13px;
+	background-color: #ffffff;
+	border:1px solid #e5e5e5;
+}
+#ajax_search_results tr {
+	position:relative;
+	z-index:1005;
+	padding:10px;
+}
+#ajax_search_results tr:hover {
+	background:#f9f9fa;
+}
+#ajax_search_results a{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	display:block;
+	position:relative;
+	z-index:1005;
+}
+#ajax_search_results .selected {
+	color: #AF2645;
+	background-color: #ebebeb;
+}
+#ajax_search_results td {
+	padding:3px;
+}
+#ajax_search_results td.live_image {
+	width: 50px;
+	padding-left:8px;
+}
+#ajax_search_results td.live_price {
+	text-align:right;
+	padding-right:10px;
+}
+#ajax_search_results tr a img{
+	display: inline-block;
+	margin-right: 10px;
+	vertical-align: middle;
+	width: 40px;
+}
+#ajax_search_results tr td a .price{
+	/*float: right;
+	margin-top: 9px;*/
+	margin-top:0px;
+	margin-bottom:0px;
+	white-space:nowrap;
+}
+#ajax_search_results tr td a .special{
+	/*float: right;
+	margin-top: 9px;*/
+	margin-top:0px;
+	margin-bottom:0px;
+	white-space:nowrap;
+}
+#ajax_search_results tr td a .old-price{
+	/*float: right;
+	margin-top: 9px;*/
+	color: #8c8c8c;
+	font-size:11px;
+	text-decoration:line-through;
+	margin-top:0px;
+	margin-bottom:0px;
+	white-space:nowrap;
+	}

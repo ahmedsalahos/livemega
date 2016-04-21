@@ -1,0 +1,298 @@
+<modification>
+	<id>Order Multistore</id>
+	<version>2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	<!-- Dashboard Recent Order-->
+	<file name="admin/model/sale/order.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.shipping_code, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified FROM `" . DB_PREFIX . "order` o";
+			]]></search>
+			<add><![CDATA[
+			    $sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT c.username FROM " . DB_PREFIX . "customer c WHERE c.customer_id = o.customer_id)as username, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.store_name, o.store_id, o.shipping_code, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified FROM `" . DB_PREFIX . "order` o";
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				'o.total'
+			]]></search>
+			<add><![CDATA[
+				'o.total',
+				'o.store_name'
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+				$sort_data = array(
+			]]></search>
+			<add><![CDATA[
+				if (!empty($data['filter_store_id'])) {
+					$sql .= " AND o.store_id = '" . (int)$data['filter_store_id'] . "'";
+				}
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/dashboard/recent.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+				<td><?php echo $column_status; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td><?php echo $column_username; ?></td>
+				<td><?php echo $column_store; ?></td>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				<td><?php echo $order['status']; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td><?php echo $order['username']; ?></td>
+				<td><?php echo $order['store']; ?></td>
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/controller/dashboard/recent.php">
+		<operation>
+			<search position="before"><![CDATA[
+				'status'     => $result['status'],
+			]]></search>
+			<add><![CDATA[
+				'username'   => $result['username'],
+				'store'      => $result['store_name'],
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$data['column_status'] = $this->language->get('column_status');
+			]]></search>
+			<add><![CDATA[
+				$data['column_username'] = $this->language->get('column_username');
+				$data['column_store'] = $this->language->get('column_store');
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/english/dashboard/recent.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$_['column_status']     = 'Status';
+			]]></search>
+			<add><![CDATA[
+				$_['column_username']     = 'Username';
+				$_['column_store']     = 'Store';
+			]]></add>
+		</operation>
+	</file>
+	
+	<!-- Order page -->
+	<file name="admin/controller/sale/order.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$data['column_status'] = $this->language->get('column_status');
+			]]></search>
+			<add><![CDATA[
+				$data['column_username'] = $this->language->get('column_username');
+				$data['column_store'] = $this->language->get('column_store');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				'status'        => $result['status'],
+			]]></search>
+			<add><![CDATA[
+				'username'        => $result['username'],
+				'store'        => $result['store_name'],
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$data['filter_total'] = $filter_total;
+			]]></search>
+			<add><![CDATA[
+				$data['filter_store_id'] = $filter_store_id;
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				$data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, 'SSL');
+			]]></search>
+			<add><![CDATA[
+				$data['sort_store_name'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.store_name' . $url, 'SSL');
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				'filter_total'         => $filter_total,
+			]]></search>
+			<add><![CDATA[
+				'filter_store_id'      => $filter_store_id,
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before" index="3"><![CDATA[
+				if (isset($this->request->get['filter_date_added'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before" index="4"><![CDATA[
+				if (isset($this->request->get['filter_date_added'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before" index="5"><![CDATA[
+				if (isset($this->request->get['filter_date_added'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before" index="2"><![CDATA[
+				if (isset($this->request->get['filter_date_added'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$filter_store_id = $this->request->get['filter_store_id'];
+				} else {
+					$filter_store_id = null;
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+				$data['entry_order_status'] = $this->language->get('entry_order_status');
+			]]></search>
+			<add><![CDATA[
+				$data['entry_username'] = $this->language->get('entry_username');
+				$data['entry_store_name'] = $this->language->get('entry_store_name');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$this->load->model('localisation/order_status');
+			]]></search>
+			<add><![CDATA[
+				$this->load->model('setting/store');
+				$data['stores'] = $this->model_setting_store->getAllStoresByKey('config_name');
+			]]></add>
+		</operation>
+	</file>
+	
+	
+	<file name="admin/language/english/sale/order.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$_['column_status']                           = 'Status';
+			]]></search>
+			<add><![CDATA[
+				$_['column_username']                           = 'Username';
+				$_['column_store']                           = 'Store';
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+				$_['entry_order_status']                      = 'Order Status';
+			]]></search>
+			<add><![CDATA[
+				$_['entry_username']                        = 'Username';
+				$_['entry_store_name']                        = 'Store Name';
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/view/template/sale/order_list.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+				<td class="text-left"><?php if ($sort == 'status') { ?>
+			]]></search>
+			<add><![CDATA[
+				<td class="text-left"><a><?php echo $column_username; ?></a></td>
+				<td class="text-left"><?php if ($sort == 'o.store_name') { ?>
+                    <a href="<?php echo $sort_store_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_store; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_store_name; ?>"><?php echo $column_store; ?></a>
+                    <?php } ?></td>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				<td class="text-left"><?php echo $order['status']; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td class="text-left"><?php echo $order['username']; ?></td>
+				<td class="text-left"><?php echo $order['store']; ?></td>
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+				var filter_total = $('input[name=\'filter_total\']').val();
+			]]></search>
+			<add><![CDATA[
+				var filter_store_id = $('select[name=\'filter_store_id\']').val();
+  
+				if (filter_store_id != '*') {
+					url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+				}	 
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before" index="4"><![CDATA[
+				<div class="form-group">
+			]]></search>
+			<add><![CDATA[
+				<div class="form-group">
+                <label class="control-label" for="input-store-id"><?php echo $entry_store_name; ?></label>
+                <select name="filter_store_id" id="input-store-id" class="form-control">
+                  <option value="*"></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $filter_store_id) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['value']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['value']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div> 
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/model/setting/store.php">
+		<operation>
+			<search position="before"><![CDATA[
+				public function getTotalStores() {
+			]]></search>
+			<add><![CDATA[
+				public function getAllStoresByKey($key) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = '" . $this->db->escape($key) . "'");
+					return $query->rows;
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>

@@ -1,0 +1,74 @@
+<modification>
+	<id>Quick Checkout</id>
+	<version> 2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+
+<file name="catalog/controller/checkout/register.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$data['entry_lastname'] = $this->language->get('entry_lastname');	
+			]]></search>
+			<add><![CDATA[
+			    $data['entry_username'] = $this->language->get('entry_username');			    
+			]]></add>
+		</operation>
+                <operation>
+			<search position="before"><![CDATA[
+	                if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+			]]></search>
+			<add><![CDATA[
+		        if ((utf8_strlen(trim($this->request->post['username'])) < 1) || (utf8_strlen(trim($this->request->post['username'])) > 32)) {
+				$json['error']['username'] = $this->language->get('error_username');
+			}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+	                    if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+			]]></search>
+			<add><![CDATA[
+		        if ($this->model_account_customer->getTotalCustomersByUsername($this->request->post['username'])) {
+				$json['error']['warning'] = $this->language->get('error_exists_username');
+			}
+			]]></add>
+		</operation>	
+
+                <operation>
+			<search position="before"><![CDATA[
+	                $this->load->model('account/address');
+			]]></search>
+			<add><![CDATA[
+		        $json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			]]></add>
+		</operation>				
+	</file>
+<file name="catalog/language/english/checkout/checkout.php">
+                <operation>
+                    <search position="after"><![CDATA[
+				$_['entry_city']                     = 'City';	
+			]]></search>
+			<add><![CDATA[
+			    $_['entry_username']       = 'Username';
+			    $_['error_exists_username']         = 'Warning: Username is already registered!';
+			    $_['error_username']       = 'Username must be between 1 and 32 characters!';		    
+			]]></add>
+                </operation>
+
+</file>
+
+<file name="catalog/view/theme/cosyone/template/checkout/register.tpl">
+		<operation>
+			<search position="before" index="3"><![CDATA[
+			    <div class="form-group required">	
+			]]></search>
+			<add><![CDATA[
+                <div class="form-group required">
+        <label class="control-label" for="input-payment-username"><?php echo $entry_username; ?></label>
+        <input type="text" name="username" value="" placeholder="<?php echo $entry_username; ?>" id="input-payment-username" class="form-control" />
+      </div>
+             
+			]]></add>
+		</operation>
+	</file>
+</modification>

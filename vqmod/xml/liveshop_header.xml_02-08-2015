@@ -1,0 +1,22 @@
+<modification>
+	<id>Index Modifications</id>
+	<version>2.0.1.1</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	<file name="catalog/controller/common/header.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$data['currency'] = $this->load->controller('common/currency');
+			]]></search>
+			<add><![CDATA[
+			$user_ip = getenv('REMOTE_ADDR'); 
+			$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$user_ip")); 
+			$country = $geo["geoplugin_countryCode"]; 
+			//var_dump($country);die;
+			if($country && $country == "EG") {
+				$this->currency->set('EGP');
+			}
+			]]></add>
+		</operation>
+	</file>
+</modification>

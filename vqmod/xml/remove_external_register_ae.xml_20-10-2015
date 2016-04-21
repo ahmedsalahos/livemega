@@ -1,0 +1,178 @@
+<modification>
+	<id>Remove external register</id>
+	<version>2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	<!-- Dashboard Recent Order-->
+	<file name="catalog/controller/account/register.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$this->load->language('account/register');
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+				if($data['store_id'] !=0) {
+					if (!$this->customer->isLogged()) {
+						$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/account/forgotten.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$this->load->language('account/forgotten');
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+				if($data['store_id'] !=0) {
+					if (!$this->customer->isLogged()) {
+						$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/common/header_login.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$data['cosyone_header_login'] = $this->config->get('cosyone_header_login');
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/checkout/login.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$this->load->language('checkout/checkout');
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/common/column_left.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$this->load->model('design/layout');
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/default/template/checkout/login.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			    	<div class="col-sm-6 margin-b">
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+			    	<div class="col-sm-6">
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+			    	<a class="pull-right login-forgotten" href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></div>
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+			    	<a class="pull-right login-forgotten" href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></div>
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>
+				<?php if($store_id != 0) { ?>
+				</div>
+				<?php } ?>	
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/default/template/common/header_login.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			    	<div class="bottom">
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after" offset="3"><![CDATA[
+			    	<div class="bottom">
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+			    	<a href="<?php echo $forgotten; ?>" class="forgotten"><?php echo $text_forgotten; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+			    	<a href="<?php echo $forgotten; ?>" class="forgotten"><?php echo $text_forgotten; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>	
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/default/template/account/login.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			    	<div class="col-sm-6 margin-b">
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+			    	<div class="col-sm-6">
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+			    	<a href="<?php echo $forgotten; ?>" class="pull-right login-forgotten"><?php echo $text_forgotten; ?></a></div>
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+			    	<a href="<?php echo $forgotten; ?>" class="pull-right login-forgotten"><?php echo $text_forgotten; ?></a></div>
+			]]></search>
+			<add><![CDATA[
+				<?php } ?>
+				<?php if($store_id != 0) { ?>
+				</div>
+				<?php } ?>	
+			]]></add>
+		</operation>
+	</file>
+</modification>

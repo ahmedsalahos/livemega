@@ -1,0 +1,27 @@
+<modification>
+	<id>Index Modifications</id>
+	<version>2.0.1.1</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	<file name="system/library/currency.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$this->set($this->config->get('config_currency'));
+			]]></search>
+			<add><![CDATA[
+			//$user_ip = getenv('REMOTE_ADDR'); 
+			//$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$user_ip")); 
+			//$country = $geo["geoplugin_countryCode"]; 
+			//if($_SERVER['SERVER_NAME'] == 'www.livemegastore.ae' || $_SERVER['SERVER_NAME'] == 'livemegastore.ae') {
+				$this->set('PTS');
+			//}
+			//if($_SERVER['SERVER_NAME'] == 'www.livemegastore.com') {
+			//	$this->set('EGP');
+			//} 
+			//else {
+			//	$this->set($this->config->get('config_currency'));
+			//}
+			]]></add>
+		</operation>
+	</file>
+</modification>

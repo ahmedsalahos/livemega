@@ -1,0 +1,194 @@
+<modification>
+	<id>show prices in USD for ltp users</id>
+	<version> 2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+
+    <file name="catalog/controller/product/product.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+			]]></search>
+			<add><![CDATA[
+				if($this->customer->isLogged() && $this->customer->getType() == 'livetoursplus') {
+					$data['USD_price'] = $this->currency->format($this->currency->convert($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->currency->getCode ,'USD'), 'USD');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$data['price'] = false;
+			]]></search>
+			<add><![CDATA[
+				$data['USD_price'] = false;
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/cosyone/template/product/product.tpl">
+		<operation>
+			<search position="replace"><![CDATA[
+				<span itemprop="price"><?php echo $price; ?></span>
+			]]></search>
+			<add><![CDATA[
+				<span itemprop="price"><?php echo $price; ?></span>
+				<?php if($USD_price) { ?> OR  <span itemprop="USD_price"><?php echo $USD_price; ?></span> <?php } ?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/module/cosyone_recently.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+			]]></search>
+			<add><![CDATA[
+				if($this->customer->isLogged() && $this->customer->getType() == 'livetoursplus') {
+					$USD_price = $this->currency->format($this->currency->convert($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->currency->getCode ,'USD'), 'USD');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$price = false;
+			]]></search>
+			<add><![CDATA[
+				$USD_price = false;
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				'price'       => $price,
+			]]></search>
+			<add><![CDATA[
+				'USD_price'       => $USD_price,
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/cosyone/template/module/cosyone_recently.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<?php echo $product['price']; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php if($product['USD_price']) { echo '<span> ' . $product['USD_price'] . '</span>'; }?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/module/showintabs_output.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+			]]></search>
+			<add><![CDATA[
+				if($this->customer->isLogged() && $this->customer->getType() == 'livetoursplus') {
+					$USD_price = $this->currency->format($this->currency->convert($result['price'], $result['tax_class_id'], $this->config->get('config_tax'), $this->currency->getCode ,'USD'), 'USD');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$price = false;
+			]]></search>
+			<add><![CDATA[
+				$USD_price = false;
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				'rating'     => $rating,
+			]]></search>
+			<add><![CDATA[
+				'USD_price'     => $USD_price,
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/cosyone/template/module/showintabs_output.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<?php echo $product['price']; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php if($product['USD_price']) { echo '<span> ' . $product['USD_price'] . '</span><br/>'; }?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/product/search.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+			]]></search>
+			<add><![CDATA[
+				if($this->customer->isLogged() && $this->customer->getType() == 'livetoursplus') {
+					$USD_price = $this->currency->format($this->currency->convert($result['price'], $result['tax_class_id'], $this->config->get('config_tax'), $this->currency->getCode ,'USD'), 'USD');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$price = false;
+			]]></search>
+			<add><![CDATA[
+				$USD_price = false;
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				'price'       => $price,
+			]]></search>
+			<add><![CDATA[
+				'USD_price'     => $USD_price,
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/cosyone/template/product/search.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<?php echo $product['price']; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php if($product['USD_price']) { echo '<span> ' . $product['USD_price'] . '</span><br/>'; }?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/product/category.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+			]]></search>
+			<add><![CDATA[
+				if($this->customer->isLogged() && $this->customer->getType() == 'livetoursplus') {
+					$USD_price = $this->currency->format($this->currency->convert($result['price'], $result['tax_class_id'], $this->config->get('config_tax'), $this->currency->getCode ,'USD'), 'USD');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$price = false;
+			]]></search>
+			<add><![CDATA[
+				$USD_price = false;
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				'price'       => $price,
+			]]></search>
+			<add><![CDATA[
+				'USD_price'     => $USD_price,
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/cosyone/template/product/category.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<?php echo $product['price']; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php if($product['USD_price']) { echo '<span> ' . $product['USD_price'] . '</span><br/>'; }?>
+			]]></add>
+		</operation>
+	</file>
+</modification>

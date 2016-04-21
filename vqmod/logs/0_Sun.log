@@ -1,0 +1,14 @@
+---------- Date: 2016-01-24 05:46:14 ~ IP : 217.165.93.230 ----------
+REQUEST URI : /megabackoffice/index.php?route=marketing/contact&token=9ebf45f487df24a073b28264c0bfa00a
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_admin.xml
+   id        : MultiMerch Core Admin Mods
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : megabackoffice/controller/marketing/contact.php(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): $this->data['cancel'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
+----------------------------------------------------------------------
+
+

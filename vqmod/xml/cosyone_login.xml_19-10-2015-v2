@@ -1,0 +1,510 @@
+<modification>
+	<id>Quick Checkout</id>
+	<version> 2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Marwa</author>
+	<file name="catalog/controller/account/login.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {	
+			]]></search>
+			<add><![CDATA[
+					$this->response->redirect($this->url->link('liveshop/login', '', 'SSL'));
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/common/header_login.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$this->url->link('account/login', '', 'SSL');	
+			]]></search>
+			<add><![CDATA[
+			    $this->url->link('liveshop/login', '', 'SSL');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$data['entry_email'] = $this->language->get('entry_email');	
+			]]></search>
+			<add><![CDATA[
+			    $data['entry_username'] = $this->language->get('entry_username');
+			]]></add>
+		</operation>				
+	</file>
+	<file name="catalog/controller/account/register.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$data['entry_lastname'] = $this->language->get('entry_lastname');	
+			]]></search>
+			<add><![CDATA[
+			    $data['entry_username'] = $this->language->get('entry_username');
+		        if (isset($this->error['username'])) {
+			        $data['error_username'] = $this->error['username'];
+		        } else {
+			        $data['error_username'] = '';
+		        }			    
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				if (isset($this->request->post['email'])) {
+			]]></search>
+			<add><![CDATA[
+		        if (isset($this->request->post['username'])) {
+			        $data['username'] = $this->request->post['username'];
+		        } else {
+			        $data['username'] = '';
+		        }
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				public function validate() {
+			]]></search>
+			<add><![CDATA[
+		        if ((utf8_strlen(trim($this->request->post['username'])) < 1) || (utf8_strlen(trim($this->request->post['username'])) > 32)) {
+			        $this->error['username'] = $this->language->get('error_username');
+		        }
+
+		        if ($this->model_account_customer->getTotalCustomersByUsername($this->request->post['username'])) {
+			        $this->error['warning'] = $this->language->get('error_exists_username');
+		        }
+			]]></add>
+		</operation>				
+	</file>
+	<file name="catalog/language/english/account/login.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				Warning: No match for E-Mail Address and/or Password.	
+			]]></search>
+			<add><![CDATA[
+			    Warning: No match for Username and/or Password.
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$_['entry_email']                  = 'E-Mail Address';	
+			]]></search>
+			<add><![CDATA[
+			    $_['entry_username']               = 'Username';
+			]]></add>
+		</operation>		
+	</file>
+	<file name="catalog/language/english/account/register.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$_['entry_lastname']       = 'Last Name';	
+			]]></search>
+			<add><![CDATA[
+			    $_['entry_username']       = 'Username';
+			    $_['error_exists_username']         = 'Warning: Username is already registered!';
+			    $_['error_username']       = 'Username must be between 1 and 32 characters!';
+			]]></add>
+		</operation>		
+	</file>/
+	<file name="catalog/model/account/customer.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? serialize($data['custom_field']['account']) : '') . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
+			]]></search>
+			<add><![CDATA[
+               	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "' , username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? serialize($data['custom_field']['account']) : '') . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(base64_encode($this->encryption->encrypt($data['password']))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', type = 'external',date_added = NOW()");
+			]]></add>
+		</operation>
+	
+		<operation>
+			<search position="replace"><![CDATA[
+				$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($password)))) . "' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");	
+			]]></search>
+			<add><![CDATA[
+                $this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(base64_encode($this->encryption->encrypt($password))) . "' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+			]]></add>
+		</operation>
+				
+		<operation>
+			<search position="replace"><![CDATA[
+				$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$customer_id . "'");	
+			]]></search>
+			<add><![CDATA[
+                		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "' , username = '" . $this->db->escape($data['username']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$customer_id . "'");
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+				public function getCustomerByToken($token) {	
+			]]></search>
+			<add><![CDATA[
+	            public function getCustomerByUsername($username) {
+		            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(username) = '" . $this->db->escape(utf8_strtolower($username)) . "'");
+
+		            return $query->row;
+	            }
+	            public function addLiveFreeCustomer($data) {
+					$this->event->trigger('pre.customer.add', $data);
+					if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+						$customer_group_id = $data['customer_group_id'];
+					} else {
+						$customer_group_id = $this->config->get('config_customer_group_id');
+					}
+
+					$this->load->model('account/customer_group');
+
+					$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+					$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', username = '" . $this->db->escape($data['username']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? serialize($data['custom_field']['account']) : '') . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(base64_encode($this->encryption->encrypt($data['password']))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', type = 'livefree', percentage_country_id = '" . (int)$this->db->escape($data['country_id']) . "', date_added = NOW()");
+
+					$customer_id = $this->db->getLastId();
+
+					$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int)$data['country_id'] . "', zone_id = '" . (int)$data['zone_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['address']) ? serialize($data['custom_field']['address']) : '') . "'");
+
+					$address_id = $this->db->getLastId();
+
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+					$this->event->trigger('post.customer.add', $customer_id);
+					return $customer_id;
+	            }
+				
+	            public function getTotalCustomersByUsername($username) {
+		            $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE LOWER(username) = '" . $this->db->escape(utf8_strtolower($username)) . "'");
+
+		            return $query->row['total'];
+	            }	            	            
+			]]></add>
+		</operation>					
+	</file>			
+	<file name="catalog/view/theme/cosyone/template/account/login.tpl">
+		<operation>
+			<search position="replace"><![CDATA[
+				<label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+                	
+			]]></search>
+			<add><![CDATA[
+				<label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
+                <input type="hidden" name="email" />
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				<input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                	
+			]]></search>
+			<add><![CDATA[
+				<input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
+			]]></add>
+		</operation>		
+	</file>
+	
+	<file name="catalog/view/theme/cosyone/template/checkout/login.tpl">
+		<operation>
+			<search position="replace"><![CDATA[
+				<label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+                	
+			]]></search>
+			<add><![CDATA[
+				<label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
+                <input type="hidden" name="email" />
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				<input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                	
+			]]></search>
+			<add><![CDATA[
+			    <input type="text" name="username" value="" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
+			]]></add>
+		</operation>
+	</file>	
+	<file name="catalog/view/theme/cosyone/template/common/header_login.tpl">
+		<operation>
+			<search position="replace"><![CDATA[
+				<?php echo $entry_email; ?><br />
+                	
+			]]></search>
+			<add><![CDATA[
+			    <?php echo $entry_username; ?><br />
+                <input type="hidden" name="email" />
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				<input type="text" name="email" class="login_input" value="<?php echo $email; ?>" />
+                	
+			]]></search>
+			<add><![CDATA[
+			    <input type="text" name="username" class="login_input" value="<?php echo $username; ?>" />
+			]]></add>
+		</operation>		
+	</file>	
+	<file name="catalog/view/theme/cosyone/template/account/register.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			    <label class="col-sm-2 control-label" for="input-email">	
+			]]></search>
+			<add><![CDATA[
+                <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
+                  <?php if ($error_username) { ?>
+                  <div class="text-danger"><?php echo $error_username; ?></div>
+                  <?php } ?>
+                </div>
+             
+			]]></add>
+		</operation>
+	</file>
+
+
+	<file name="system/library/customer.php">
+		<operation>
+			<search position="after"><![CDATA[
+			    private $email;	
+			]]></search>
+			<add><![CDATA[
+	            private $username;
+	            private $type;
+	            private $password;
+				private $percentage_country;
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+			    $this->session = $registry->get('session');	
+			]]></search>
+			<add><![CDATA[
+	            $this->encryption = new Encryption($this->config->get('config_encryption'));
+			]]></add>
+		</operation>
+				
+		<operation>
+			<search position="before"><![CDATA[
+			    $this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'")	
+			]]></search>
+			<add><![CDATA[
+	            $this->username = $customer_query->row['username'];
+				$this->type = $customer_query->row['type'];
+				$this->password = $customer_query->row['password'];
+				$this->percentage_country = $customer_query->row['percentage_country_id'];
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="replace"><![CDATA[
+			    $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+			]]></search>
+			<add><![CDATA[
+	            $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = '" . $this->db->escape(base64_encode($this->encryption->encrypt($password))) . "' OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+			]]></add>
+		</operation>
+				
+		<operation>
+			<search position="before"><![CDATA[
+			    $this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");	
+			]]></search>
+			<add><![CDATA[
+	            $this->username = $customer_query->row['username'];
+			    $this->type = $customer_query->row['type'];
+			    $this->password = $customer_query->row['password'];
+				$this->percentage_country = $customer_query->row['percentage_country_id'];
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+			    unset($this->session->data['customer_id']);	
+			]]></search>
+			<add><![CDATA[
+		        $this->username = '';
+		        $this->type = '';
+		        $this->password = '';
+				$this->percentage_country = '';
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+			    public function getRewardPoints() {	
+			]]></search>
+			<add><![CDATA[
+	            public function getUsername() {
+		            return $this->username;
+	            }
+	            public function getType() {
+		            return $this->type;
+	            }
+				
+				public function getPercentageCountryId() {
+		            return $this->percentage_country;
+	            }
+				
+	            public function getPassword() {
+		            return $this->encryption->decrypt(base64_decode($this->password));
+	            }	            
+	            public function isLiveFreeUser($username, $password) {
+		            $url = LOGIN_WSDL;
+		            $result = "";
+		            $options["connection_timeout"] = 25;
+		            $options["location"] = $url;
+		            $options['trace'] = true;
+		            $options['exceptions'] = true;
+		            $options['cache_wsdl'] = WSDL_CACHE_NONE;
+		            //$username = "liv1909518";
+		            //$password = "pass000";
+		            try {
+			            $client = new SoapClient($url,$options);
+			            $res = $client->getTourPlusPoint($username, $password);
+		            } catch (Exception $e) { 
+			            $result = "false";
+		            }
+		            if(is_soap_fault($res)) {
+			            $result = "false";
+		            } else {
+			            $result = json_decode($res);
+		            }
+		            return $result;
+	            }
+                public function verifyLiveFreeUser($username) {
+	                $url = USER_VERIVY;
+	                $result = "";
+	                $options["connection_timeout"] = 25;
+	                $options["location"] = $url;
+	                $options['trace'] = true;
+	                $options['exceptions'] = true;
+	                $options['cache_wsdl'] = WSDL_CACHE_NONE;
+	                //$username = "liv1909518";
+	                //$password = "pass000";
+	                try {
+		                $client = new SoapClient($url,$options);
+		                $res = $client->verifyLiveFreeUser($username);
+	                } catch (Exception $e) { 
+		                $result = "false";
+	                }
+	                if(is_soap_fault($res)) {
+		                $result = "false";
+	                } else {
+		                $result = json_decode($res);
+	                }
+	                return $result;
+                }	            
+	            public function insertOrderIntoLivefree($data) {
+		            $url = INSERT_ORDER_INTO_LIVEFREE;
+		            $result = "";
+		            $options["connection_timeout"] = 25;
+		            $options["location"] = $url;
+		            $options['trace'] = true;
+		            $options['exceptions'] = true;
+		            $options['cache_wsdl'] = WSDL_CACHE_NONE;
+		            //$username = "liv1909518";
+		            //$password = "pass000";
+		            try {
+			            $client = new SoapClient($url,$options);
+			            $res = $client->insertOrderIntoLivefree(serialize($data));
+		            } catch (Exception $e) { 
+			            $result = "false";
+		            }
+		            if(is_soap_fault($res)) {
+			            $result = "false";
+		            } else {
+			            $result = json_decode($res);
+		            }
+		            return $result;
+	            }
+	            public function checkLiveFreePremiumPoints($username, $password) {
+		            $result = $this->isLiveFreeUser($username, $password);
+		            return $result->rsp_premium_point;
+	            }
+
+	            public function checkLiveFreeGoldenPoints($username, $password) {
+		            $result = $this->isLiveFreeUser($username, $password);
+		            return $result->rsp_golden_point;
+	            }
+
+	            public function updateLiveFreePoints($username, $password, $rsp_golden_point) {
+		            $url = UPDATE_POINTS_WSDL;
+		            $result = "";
+		            $options["connection_timeout"] = 25;
+		            $options["location"] = $url;
+		            $options['trace'] = true;
+		            $options['exceptions'] = true;
+		            $options['cache_wsdl'] = WSDL_CACHE_NONE;
+		            //$username = "liv1909518";
+		            //$password = "pass000";
+		            try {
+			            $client = new SoapClient($url,$options);
+			            $res = $client->updateTourPlusPoint($username, $password, $rsp_golden_point);
+		            }catch (Exception $e) {
+			            $result = "false";
+		            }
+		            if(is_soap_fault($res)) {
+			            $result = "false";
+		            } else {
+			            $result = json_decode($res);
+		            }
+		            return $result;
+	            }
+
+
+	            public function testApi() {
+		            $url = "http://testapi.travelstart.com/ts-ext-services/flight-service?wsdl";
+		            $result = "";
+		            $options["connection_timeout"] = 25;
+		            $options["location"] = $url;
+		            $options['trace'] = true;
+		            $options['exceptions'] = true;
+		            $options['cache_wsdl'] = WSDL_CACHE_NONE;
+		            //$username = "liv1909518";
+		            //$password = "pass000";
+		
+		            $client = new SoapClient($url,$options);
+		            $res = $client->search("ghfjgf");
+		            $result = $res;
+		            return $result;
+	            }
+
+
+	            private function curlTest() {
+		            $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, 'localhost/api-test/api.php');
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, "id=".$email);
+                    //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                    $response = curl_exec($ch);
+                    $data = json_decode($response);
+                    
+                    if($data) {
+                    	echo "yes";var_dump($data[2]);
+
+                    			$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '1', 
+                    				store_id = '0', firstname = 'kimoz', lastname = 'alioz', email = 'kmoms@email.com', 
+                    				telephone = '242342342', fax = '242342', custom_field = 'custom', salt = 'salt', password = 'password', newsletter = 'news', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '1', date_added = NOW()");
+			            die();
+		
+		             }else{
+                    	echo "no";die();
+                    }
+
+                    return $data;
+	            }	            
+			]]></add>
+		</operation>								
+	</file>
+	<file name="catalog/controller/account/logout.php">
+		<operation>
+			<search position="before"><![CDATA[
+			    $this->event->trigger('post.customer.logout');	
+			]]></search>
+			<add><![CDATA[
+			    unset($this->session->data['points']);
+			    unset($this->session->data['user_im']);
+			    unset($this->session->data['promoted_by']);
+			    unset($this->session->data['promoted_by_full_name']);
+			    unset($this->session->data['referrer_code']);
+			]]></add>
+		</operation>
+	</file>					
+</modification>

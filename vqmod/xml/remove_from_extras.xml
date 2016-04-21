@@ -1,0 +1,22 @@
+<modification>
+	<id>LiveShop</id>
+	<version>OC 2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+<file name="catalog/view/theme/cosyone/template/common/footer.tpl">
+		<operation>
+			<search position="replace"><![CDATA[
+				<li><i class="fa fa-caret-right"></i><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				<li><i class="fa fa-caret-right"></i><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+			]]></add>
+		</operation>
+	</file>
+</modification>

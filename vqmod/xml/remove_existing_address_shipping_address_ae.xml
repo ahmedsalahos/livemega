@@ -1,0 +1,105 @@
+<modification>
+	<id>Remove existing address from shipping address AE</id>
+	<version>2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+
+	<file name="catalog/controller/checkout/shipping_address.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$data['addresses'] = $this->model_account_address->getAddresses();
+			]]></search>
+			<add><![CDATA[
+				$data['store_id'] = $this->config->get('config_store_id');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			]]></search>
+			<add><![CDATA[
+			    if($this->config->get('config_store_id') == 1) {
+					$countries = array();
+					$countries = explode('-', GULF_COUNTRIES);
+					if (!in_array($this->request->post['country_id'], $countries)) {
+						$json['error']['country'] = $this->language->get('error_country_restricted');
+					}
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing' && $this->config->get('config_store_id') != 1) {
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/checkout/checkout.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$_['error_postcode']                 = 'Postcode must be between 2 and 10 characters!';
+			]]></search>
+			<add><![CDATA[
+				$_['error_country_restricted']       = 'Please select country in gulf';
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/default/template/checkout/shipping_address.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			    	<?php if ($addresses) { ?>
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 0) { ?>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+			    	<br />
+			]]></search>
+			<add><![CDATA[
+				<?php } else { } ?>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+			    	<div id="shipping-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
+			]]></search>
+			<add><![CDATA[
+				<?php if($store_id == 1) { ?>	
+					<div id="shipping-new" style="display: <?php echo ($addresses ? 'block' : 'none'); ?>;">
+				<?php } else { ?>
+					<div id="shipping-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
+				<?php } ?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/model/localisation/country.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$country_data = $this->cache->get('country.status');
+			]]></search>
+			<add><![CDATA[
+				//$country_data = $this->cache->get('country.status');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE status = '1' ORDER BY name ASC");
+			]]></search>
+			<add><![CDATA[
+				if($this->config->get('config_store_id') == 1) {
+					$countries = array();
+					$countries = array_map('intval', explode('-', GULF_COUNTRIES));
+					$countries = implode("','",$countries);
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id IN ('".$countries."') AND status = '1' ORDER BY name ASC");
+				} else {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE status = '1' ORDER BY name ASC");
+				}
+			]]></add>
+		</operation>
+	</file>
+</modification>

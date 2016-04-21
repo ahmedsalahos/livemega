@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Products 2.0.1</id>
+	<version>1.0</version>
+	<vqmver>2.4.1</vqmver>
+	<author>Kareem</author>
+
+<file name="catalog/controller/checkout/shipping_method.php">
+    <operation>
+            <search position="replace"><![CDATA[					
+            $data['text_shipping_method'] = $this->language->get('text_shipping_method');
+            ]]></search>
+            <add><![CDATA[
+                $data['text_shipping_method'] = $this->language->get('text_shipping_method');
+				$data['text_shipping_message'] = $this->language->get('text_shipping_message');
+            ]]></add>
+    </operation>
+</file>
+<file name="catalog/language/english/checkout/checkout.php">
+    <operation>
+            <search position="replace"><![CDATA[					
+            $_['text_checkout']                  = 'Checkout Options:';
+            ]]></search>
+            <add><![CDATA[
+                $_['text_checkout']                  = 'Checkout Options:';
+				$_['text_shipping_message']          = 'Product delivery within 2 weeks';
+            ]]></add>
+    </operation>
+</file>
+
+<file name="catalog/view/theme/cosyone/template/checkout/shipping_method.tpl">
+    <operation>
+            <search position="replace"><![CDATA[					
+            <?php if ($shipping_methods) { ?>
+            ]]></search>
+            <add><![CDATA[
+                <p><?php echo $text_shipping_message;?></p>
+				<?php if ($shipping_methods) { ?>
+            ]]></add>
+    </operation>
+</file>
+
+
+
+</modification>

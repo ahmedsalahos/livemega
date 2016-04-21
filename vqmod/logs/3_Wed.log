@@ -1,0 +1,20 @@
+---------- Date: 2015-10-21 00:07:03 ~ IP : 83.110.153.60 ----------
+REQUEST URI : /index.php?route=account/order/info&order_id=1005
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/account/order_info.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <td class="text-left"><?php echo $product['name']; ?>
+
+File Name    : catalog/view/theme/cosyone/template/account/order_info.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <td class="text-left"><?php echo $product['model']; ?></td>
+
+File Name    : catalog/view/theme/cosyone/template/account/order_info.tpl(2)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <td class="text-left"><?php echo $column_model; ?></td>
+----------------------------------------------------------------------
+
+

@@ -1,0 +1,9 @@
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_SYSTEM - assumed 'DIR_SYSTEM' in /home/livemega/public_html/system/startup.php on line 84
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_MODIFICATION - assumed 'DIR_MODIFICATION' in /home/livemega/public_html/system/startup.php on line 51
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_APPLICATION - assumed 'DIR_APPLICATION' in /home/livemega/public_html/system/startup.php on line 51
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_SYSTEM - assumed 'DIR_SYSTEM' in /home/livemega/public_html/system/startup.php on line 56
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_SYSTEM - assumed 'DIR_SYSTEM' in /home/livemega/public_html/system/startup.php on line 56
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_MODIFICATION - assumed 'DIR_MODIFICATION' in /home/livemega/public_html/system/startup.php on line 57
+[26-Jul-2015 09:17:12 America/Denver] PHP Notice:  Use of undefined constant DIR_SYSTEM - assumed 'DIR_SYSTEM' in /home/livemega/public_html/system/startup.php on line 57
+[26-Jul-2015 09:17:12 America/Denver] PHP Warning:  require_once(DIR_SYSTEMengine/action.php): failed to open stream: No such file or directory in /home/livemega/public_html/system/startup.php on line 84
+[26-Jul-2015 09:17:12 America/Denver] PHP Fatal error:  require_once(): Failed opening required 'DIR_SYSTEMengine/action.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/livemega/public_html/system/startup.php on line 84

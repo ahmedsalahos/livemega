@@ -1,0 +1,14 @@
+### OpenCart template
+.htaccess
+/config.php
+admin/config.php
+
+!index.html
+
+download/
+image/data/
+image/cache/
+system/cache/
+system/logs/
+
+# Created by .ignore support plugin (hsz.mobi)

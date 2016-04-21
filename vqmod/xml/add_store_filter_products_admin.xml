@@ -1,0 +1,192 @@
+<modification>
+	<id>product Multistore</id>
+	<version>2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	
+	<file name="admin/controller/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[
+				protected function getList() {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$filter_store_id = $this->request->get['filter_store_id'];
+				} else {
+					$filter_store_id = null;
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before" index="6"><![CDATA[
+				if (isset($this->request->get['filter_quantity'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				'filter_quantity' => $filter_quantity,
+			]]></search>
+			<add><![CDATA[
+				'filter_store_id' => $filter_store_id,
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$data['entry_quantity'] = $this->language->get('entry_quantity');
+			]]></search>
+			<add><![CDATA[
+				$data['entry_store_name'] = $this->language->get('entry_store_name');
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$data['column_quantity'] = $this->language->get('column_quantity');
+			]]></search>
+			<add><![CDATA[
+				$data['column_store_name'] = $this->language->get('column_store_name');
+			]]></add>
+		</operation>		
+		<operation>
+			<search position="before" index="7"><![CDATA[
+				if (isset($this->request->get['filter_quantity'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before" index="8"><![CDATA[
+				if (isset($this->request->get['filter_quantity'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($this->request->get['filter_store_id'])) {
+					$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$data['filter_quantity'] = $filter_quantity;
+			]]></search>
+			<add><![CDATA[
+				$data['filter_store_id'] = $filter_store_id;
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				'quantity'   => $result['quantity'],
+			]]></search>
+			<add><![CDATA[
+				'product_stores'   => $this->model_catalog_product->getProductStores($result['product_id']),
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/product_list.tpl', $data));
+			]]></search>
+			<add><![CDATA[
+				$this->load->model('setting/store');
+				$data['stores'] = $this->model_setting_store->getAllStoresByKey('config_name');
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/english/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$_['entry_quantity']         = 'Quantity';
+			]]></search>
+			<add><![CDATA[
+				$_['entry_store_name']         = 'Store Name';
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[
+				$_['column_quantity']        = 'Quantity';
+			]]></search>
+			<add><![CDATA[
+				$_['column_store_name']        = 'Store Name';
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/catalog/product_list.tpl">
+		<operation>
+			<search position="before" index="5"><![CDATA[
+				<div class="form-group">
+			]]></search>
+			<add><![CDATA[
+				<div class="form-group">
+                <label class="control-label" for="input-store-id"><?php echo $entry_store_name; ?></label>
+                <select name="filter_store_id" id="input-store-id" class="form-control">
+                  <option value="*"></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $filter_store_id) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['value']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['value']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div> 
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				<td class="text-left"><?php if ($sort == 'p.model') { ?>
+			]]></search>
+			<add><![CDATA[
+				<td class="text-left">
+                    <a><?php echo $column_store_name; ?></a>
+				</td>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				<td class="text-left"><?php echo $product['model']; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td class="text-left">
+				<?php 
+				if($product['product_stores']) {
+					foreach($product['product_stores'] as $store) {
+					    if($store == 0) {
+							echo 'Live Mega Store';
+						} else {
+							echo 'Live Mega Store UAE';
+						}
+					}
+				}?></td>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				var filter_model = $('input[name=\'filter_model\']').val();
+			]]></search>
+			<add><![CDATA[
+				var filter_store_id = $('select[name=\'filter_store_id\']').val();
+  
+				if (filter_store_id != '*') {
+					url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+				}
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/model/catalog/product.php">
+		<operation>
+			<search position="before"><![CDATA[
+				if (!empty($data['filter_model'])) {
+			]]></search>
+			<add><![CDATA[
+				if (isset($data['filter_store_id']) && !is_null($data['filter_store_id'])) {
+					$sql .= " AND p.product_id IN (SELECT ps.product_id FROM " . DB_PREFIX . "product_to_store ps WHERE ps.store_id = '" . $data['filter_store_id'] . "')";
+				}
+			]]></add>
+		</operation>
+	</file>
+</modification>

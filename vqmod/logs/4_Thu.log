@@ -1,0 +1,312 @@
+---------- Date: 2015-11-05 20:03:22 ~ IP : 41.69.118.33 ----------
+REQUEST URI : /megabackoffice/index.php?route=catalog/product&token=51e413f078446d7984a49916427eae69&page=24
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+VQModObject::parseMods - Could not resolve path for [catalog/view/theme/cosyone/template/mail/order.tpl] (SKIPPED)
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:04:04 ~ IP : 180.76.15.139 ----------
+REQUEST URI : /index.php?route=product/quickview&manufacturer_id=8&product_id=113&sort=p.model&order=DESC
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_seourl.xml
+   id        : MultiMerch Core SEO URLs
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/controller/common/seo_url.php(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): && $url[0] != 'product_id'
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:09:50 ~ IP : 197.35.18.12 ----------
+REQUEST URI : /
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/cart.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/cosyone_liveshop.xml
+   id        : LiveShop
+   version   : OC 2
+   vqmver    : 2.5.0
+   author    : Marwa
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <?php if ($description) { ?>
+				<meta name="description" content="<?php echo $description; ?>" />
+				<?php } ?>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:12:12 ~ IP : 41.69.118.33 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/module/account.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <div class="list-group">
+
+File Name    : catalog/view/theme/cosyone/template/account/account.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <h2><?php echo $text_my_newsletter; ?></h2>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:12:12 ~ IP : 157.55.39.115 ----------
+REQUEST URI : /index.php?route=product/product&product_id=142
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_productpage.xml
+   id        : MultiMerch Core Product Page Mods
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/product/product.tpl(3)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:16:50 ~ IP : 41.69.118.33 ----------
+REQUEST URI : /megabackoffice/index.php?route=sale/order&token=51e413f078446d7984a49916427eae69
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+VQModObject::parseMods - Could not resolve path for [catalog/view/theme/cosyone/template/mail/order.tpl] (SKIPPED)
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:17:32 ~ IP : 197.35.18.12 ----------
+REQUEST URI : /index.php?route=product/category&path=67_69&page=2
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_seourl.xml
+   id        : MultiMerch Core SEO URLs
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/controller/common/seo_url.php(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): && $url[0] != 'product_id'
+
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/cart.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/cosyone_liveshop.xml
+   id        : LiveShop
+   version   : OC 2
+   vqmver    : 2.5.0
+   author    : Marwa
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <?php if ($description) { ?>
+				<meta name="description" content="<?php echo $description; ?>" />
+				<?php } ?>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:20:41 ~ IP : 41.69.118.33 ----------
+REQUEST URI : /megabackoffice/index.php?route=sale/order&token=51e413f078446d7984a49916427eae69
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+VQModObject::parseMods - Could not resolve path for [catalog/view/theme/cosyone/template/mail/order.tpl] (SKIPPED)
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:21:49 ~ IP : 180.76.15.7 ----------
+REQUEST URI : /
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_seourl.xml
+   id        : MultiMerch Core SEO URLs
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/controller/common/seo_url.php(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): && $url[0] != 'product_id'
+
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/cart.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/cosyone_liveshop.xml
+   id        : LiveShop
+   version   : OC 2
+   vqmver    : 2.5.0
+   author    : Marwa
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <?php if ($description) { ?>
+				<meta name="description" content="<?php echo $description; ?>" />
+				<?php } ?>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:22:31 ~ IP : 41.69.118.33 ----------
+REQUEST URI : /megabackoffice/index.php?route=sale/order&token=51e413f078446d7984a49916427eae69&filter_store_id=0
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+VQModObject::parseMods - Could not resolve path for [catalog/view/theme/cosyone/template/mail/order.tpl] (SKIPPED)
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:23:33 ~ IP : 180.76.15.18 ----------
+REQUEST URI : /
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_seourl.xml
+   id        : MultiMerch Core SEO URLs
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/controller/common/seo_url.php(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): && $url[0] != 'product_id'
+
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellerinfos.xml
+   id        : MultiMerch Core seller information in various places
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/cart.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/cosyone_liveshop.xml
+   id        : LiveShop
+   version   : OC 2
+   vqmver    : 2.5.0
+   author    : Marwa
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <?php if ($description) { ?>
+				<meta name="description" content="<?php echo $description; ?>" />
+				<?php } ?>
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 20:34:04 ~ IP : 180.76.15.32 ----------
+REQUEST URI : /index.php?route=product/product&path=67_69&product_id=57&sort=rating&order=ASC&limit=75
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_productpage.xml
+   id        : MultiMerch Core Product Page Mods
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/product/product.tpl(3)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 21:46:08 ~ IP : 31.218.169.160 ----------
+REQUEST URI : /index.php?route=liveshop/login
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/module/account.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <div class="list-group">
+
+File Name    : catalog/view/theme/cosyone/template/account/login.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <a href="<?php echo $register; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2015-11-05 23:50:26 ~ IP : 156.170.69.122 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : /home/livemega/public_html/vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/cosyone/template/account/account.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): <h2><?php echo $text_my_newsletter; ?></h2>
+
+----------------------------------------------------------------------
+
+

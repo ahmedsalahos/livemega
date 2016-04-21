@@ -1,0 +1,135 @@
+<modification>
+	<id>Payment Multistore</id>
+	<version>2</version>
+	<vqmver>2.5.0</vqmver>
+	<author>Kareem</author>
+	<!-- Dashboard Recent Order-->
+	<file name="catalog/controller/checkout/payment_method.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$results = $this->model_extension_extension->getExtensions('payment');
+			]]></search>
+			<add><![CDATA[
+				$this->load->model('extension/extension_to_store');
+				$results = $this->model_extension_extension_to_store->getExtensions($this->config->get('config_store_id'), 'payment');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/checkout/shipping_method.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$results = $this->model_extension_extension->getExtensions('shipping');
+			]]></search>
+			<add><![CDATA[
+				$this->load->model('extension/extension_to_store');
+				$results = $this->model_extension_extension_to_store->getExtensions($this->config->get('config_store_id'), 'shipping');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/model/extension/extension.php">
+		<operation>
+			<search position="before"><![CDATA[
+				public function install($type, $code) {
+			]]></search>
+			<add><![CDATA[
+				function getExtensions($type) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "'");
+					return $query->rows;
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[
+				public function uninstall($type, $code) {
+			]]></search>
+			<add><![CDATA[
+				function getExtensionById($extension_id) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `extension_id` = '" . (int)$extension_id . "'");
+					return $query->row;
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<!-- Update admin left menu -->
+	<file name="admin/controller/common/menu.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$data['text_payment'] = $this->language->get('text_payment');
+			]]></search>
+			<add><![CDATA[
+				$data['text_payment_to_store'] = $this->language->get('text_payment_to_store');
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				$data['text_shipping'] = $this->language->get('text_shipping');
+			]]></search>
+			<add><![CDATA[
+				$data['text_shipping_to_store'] = $this->language->get('text_shipping_to_store');
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+			]]></search>
+			<add><![CDATA[
+				$data['payment_to_store'] = $this->url->link('extension/payment_to_store', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				$data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
+			]]></search>
+			<add><![CDATA[
+				$data['shipping_to_store'] = $this->url->link('extension/shipping_to_store', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/language/english/common/menu.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$_['text_payment']                     = 'Payments';
+			]]></search>
+			<add><![CDATA[
+				$_['text_payment_to_store']            = 'Payment to Store';
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				$_['text_shipping']                    = 'Shipping';
+			]]></search>
+			<add><![CDATA[
+				$_['text_shipping_to_store']           = 'Shipping to Store';
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/view/template/common/menu.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+				<li><a href="<?php echo $payment_to_store; ?>"><?php echo $text_payment_to_store; ?></a></li>
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[
+				<li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+				<li><a href="<?php echo $shipping_to_store; ?>"><?php echo $text_shipping_to_store; ?></a></li>
+			]]></add>
+		</operation>
+	</file>
+</modification>
