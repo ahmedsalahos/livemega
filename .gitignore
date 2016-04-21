@@ -1,8 +1,8 @@
 ### OpenCart template
 .htaccess
 /config.php
-admin/config.php
-
+megabackoffice/config.php
+.idea/
 !index.html
 
 download/
@@ -12,3 +12,4 @@ system/cache/
 system/logs/
 
 # Created by .ignore support plugin (hsz.mobi)
+/vqmod/checked.cache
