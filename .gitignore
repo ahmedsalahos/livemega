@@ -4,6 +4,7 @@
 megabackoffice/config.php
 .idea/
 !index.html
+/ideac.php
 
 download/
 image/data/
