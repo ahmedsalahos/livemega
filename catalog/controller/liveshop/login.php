@@ -187,14 +187,13 @@ class ControllerLiveshopLogin extends Controller {
 	protected function validate() {
 		// Check how many login attempts have been made.
 		//print_r($this->soap->encrypt('aaa'));
-		//print_r($this->Encryption->decrypt('MWRzZVAwTlE1Zi1CS1llbmpPOGtzalVhWVVlc1FPYlFUeldDN1RfLUhBZyw='));
-                //print_r( $this->encryption->decrypt(base64_decode('')));
+		//print_r($this->Encryption->decrypt('6h6SD6yzZJqGJQ76VwPf6IhPRcd6KLf5sLiz1pRuE6g,'));die();
 		//$total = $this->cart->getTotal();
 		//print_r($this->currency->convert($total, 'USD','Pon'));die();
 		//print_r($this->currency->getCode());die();
 		//print_r($this->customer->updateLiveFreePoints("dsds","fadsf",2,24));die();
 		//print_r($this->customer->livetoursplusLogin("ltp910331", "Sei6vwIo5t"));die();
-		//print_r($this->customer->livetoursplusPointTransaction("ltp910331", "Sei6vwIo5t", 4242, 10000, 0));die();
+		//print_r($this->customer->livetoursplusPointTransaction("ltp910331", "Sei6vwIo5t", 4242567, 100000, 0));die();
 		if(trim($this->request->post['username']) && trim($this->request->post['password'])) {
 		    //echo trim($this->request->post['username'])." && ".trim($this->request->post['password']);die();
 			$customer_info = $this->model_account_customer->getCustomerByUsername($this->request->post['username']);
@@ -209,7 +208,7 @@ class ControllerLiveshopLogin extends Controller {
 		
 						if($isLiveFree->status == 1) {
 							$userEmailExist = $this->model_account_customer->getCustomerByEmail($isLiveFree->email);
-							if(count($userEmailExist['customer_id']) == 1) {
+							//if(count($userEmailExist['customer_id']) == 1) {
 							$isLiveFreeAndOlUser = $this->model_account_customer->getCustomerByUsername(trim($this->request->post['username']));
 								
 							if($isLiveFreeAndOlUser) { 
@@ -284,9 +283,9 @@ class ControllerLiveshopLogin extends Controller {
 	            			//print_r($isLiveFree);die();
 	            			$this->error['warning'] = $this->language->get('error_login');
 							}
-							} else {
-								$this->error['warning'] = "you have a livetoursplus account";
-							}
+							//} else {
+							//	$this->error['warning'] = "you have a livetoursplus account";
+							//}
 						} else {
 							// is not livefree user 
 							//echo "is not isLiveFree";die();

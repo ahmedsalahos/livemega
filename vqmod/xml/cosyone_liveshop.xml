@@ -435,7 +435,7 @@
 	<file name="catalog/view/theme/cosyone/template/module/account.tpl">
 		<operation>
 			<search position="before"><![CDATA[
-				<li><a href="<?php echo $password; ?>"><?php echo $text_password; ?></a></li>
+				<li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>
 			]]></search>
 			<add><![CDATA[
                 <?php if(!isset($this->session->data['user_im'])) :?>
@@ -455,14 +455,36 @@
 	<file name="catalog/controller/account/account.php">
 		<operation>
 			<search position="before"><![CDATA[
+				$data['text_edit'] = $this->language->get('text_edit');
+				
+			]]></search>
+			<add><![CDATA[
+                if(!isset($this->session->data['user_im'])) {
+			]]></add>
+		</operation>
+			<operation>
+			<search position="after"><![CDATA[
 				$data['text_password'] = $this->language->get('text_password');
 			]]></search>
 			<add><![CDATA[
-                if(!isset($this->session->data['user_im']))
+                }
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/account/password.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+                if(isset($this->session->data['user_im'])) {
+                    $this->response->redirect($this->url->link('account/account', '', 'SSL'));
+                }
 			]]></add>
 		</operation>						
 	</file>
-	<file name="catalog/controller/account/password.php">
+	
+	<file name="catalog/controller/account/edit.php">
 		<operation>
 			<search position="after"><![CDATA[
 				public function index() {
